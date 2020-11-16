@@ -1,13 +1,12 @@
 ---
-title: "ggplotly geoms"
-author: "Carson Sievert"
+title: "R可视乎"
+author: "庄闪闪"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
     social: menu
     source_code: embed
 ---
-
 ```{r setup, include=FALSE}
 library(ggplot2)
 library(plotly)
@@ -21,7 +20,7 @@ dat <- data.frame(cond = rep(c("A", "B"), each=10),
                   yvar = 1:20 + rnorm(20,sd=3))
 ```
 
-geom_point
+散点图
 =======================================================================
 
 Row
@@ -73,7 +72,7 @@ p <- p + geom_point() + geom_line(aes(y = pred))
 ggplotly(p)
 ```
 
-geom_density
+密度图
 =======================================================================
 
 Row
@@ -95,29 +94,7 @@ ggplotly(p)
 
 ### Add Conditional Density Curves to Plot
 
-```{r}
-dim1 <- c(rnorm(100, mean=1), rnorm(100, mean=4))
-dim2 <- rnorm(200, mean=1)
-cat <- factor(c(rep("a", 100), rep("b", 100)))
-mydf <- data.frame(cbind(dim2, dim1, cat))
-p <- ggplot(data=mydf, aes(x=dim1, y=dim2, colour=as.factor(cat))) +
-  geom_point() +
-  stat_density(aes(x=dim1, y=(-2+(..scaled..))),
-               position="identity", geom="line")
 
-# extract the x range to make the new densities align with y-axis
-xrange <- ggplot_build(p)$layout$panel_ranges[[1]]$x.range
-
-## Get densities of dim2
-ds <- do.call(rbind, lapply(unique(mydf$cat), function(lev) {
-    dens <- with(mydf, density(dim2[cat==lev]))
-    data.frame(x=dens$y+xrange[1], y=dens$x, cat=lev)
-}))
-
-p <- p + geom_path(data=ds, aes(x=x, y=y, color=factor(cat)))
-
-ggplotly(p)
-```
 
 Row
 -----------------------------------------------------------------------
@@ -161,3 +138,24 @@ p <- ggplot(df, aes(x, y)) +
 
 ggplotly(p)
 ```
+
+解释说明
+=======================================================================
+
+|应用名称	|状态量	|观测量|
+|:--:|:--:|:--:|
+|GPS	|位置、星历|	多个卫星的波达时间、星历|
+目标跟踪|	位置、速度	|传感器量测量|
+多目标跟踪|	同上、目标数量、数据关联|传感器数据|
+|组合惯性导航	|位置、速度|	GPS、IMU|
+|传染病|	人群	|量测信息|
+
+还有生物过程、通信、音频信号处理、随机最优控制、学习系统、物理系统。值得一提的是，随机最优控制还有时间最短、误差最小的概念在里面。
+
+[Locating neighborhood diversity in the American metropolis](https://walkerke.shinyapps.io/neighborhood_diversity/#compare-over-time)
+
+# dd
+
+## sss
+
+### ddd
